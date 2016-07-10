@@ -32,7 +32,7 @@ function installDeps() {
       args: '--progress=false'
     }));
 }
-module.exports.install = gulp.series(installDeps);
+module.exports.install = installDeps;
 
 function compileTs() {
   const tsResult = gulp.src([
@@ -47,7 +47,7 @@ function compileTs() {
       .pipe(sourcemaps.write())
       .pipe(gulp.dest('dist/js'));
 }
-module.exports.compile = gulp.series(compileTs);
+module.exports.compile = compileTs;
 
 function runTests() {
   return gulp.src('./dist/js/**/*')
@@ -57,9 +57,12 @@ function runTests() {
 }
 module.exports.test = gulp.series(installDeps, compileTs, runTests);
 
-function runServer() {
+function watchCompile() {
   gulp.watch('src/**/*', gulp.series(compileTs));
+}
+module.exports['compile-watch'] = gulp.series(compileTs, watchCompile);
 
+function runWatch() {
   nodemon({
     script: 'dist/js/index.js',
     watch: 'dist/js',
@@ -68,7 +71,5 @@ function runServer() {
     env: {'NODE_ENV': 'development'}
   });
 }
-module.exports['run-server'] = gulp.series(
-  installDeps,
-  compileTs,
-  runServer);
+
+module.exports['run-watch'] = runWatch;
