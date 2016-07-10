@@ -34,7 +34,7 @@ function installDeps() {
 }
 module.exports.install = gulp.series(installDeps);
 
-function complileTs() {
+function compileTs() {
   const tsResult = gulp.src([
     'src/**/*.ts',
     'typings/**/*.d.ts'
@@ -47,7 +47,7 @@ function complileTs() {
       .pipe(sourcemaps.write())
       .pipe(gulp.dest('dist/js'));
 }
-module.exports.compile = gulp.series(complileTs);
+module.exports.compile = gulp.series(compileTs);
 
 function runTests() {
   return gulp.src('./dist/js/**/*')
@@ -55,10 +55,10 @@ function runTests() {
     .pipe(mocha())
     .pipe(gulp.dest('../.build/coverage/reports'));
 }
-module.exports.test = gulp.series(installDeps, complileTs, runTests);
+module.exports.test = gulp.series(installDeps, compileTs, runTests);
 
 function runServer() {
-  gulp.watch('src/**/*', gulp.series(complileTs));
+  gulp.watch('src/**/*', gulp.series(compileTs));
 
   nodemon({
     script: 'dist/js/index.js',
@@ -68,4 +68,7 @@ function runServer() {
     env: {'NODE_ENV': 'development'}
   });
 }
-module.exports['run-server'] = gulp.series(installDeps, complileTs, runServer);
+module.exports['run-server'] = gulp.series(
+  installDeps,
+  compileTs,
+  runServer);
