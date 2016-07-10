@@ -66,7 +66,7 @@ function runWatch() {
   nodemon({
     script: 'dist/js/index.js',
     watch: 'dist/js',
-    delay: 10,
+    delay: 100,
     ext: 'js',
     env: {'NODE_ENV': 'development'}
   });
