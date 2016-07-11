@@ -62,9 +62,9 @@ function watchCompile() {
 }
 module.exports['compile-watch'] = gulp.series(compileTs, watchCompile);
 
-function runWatch() {
+function runWatch(config, env, argv) {
   nodemon({
-    script: 'dist/js/index.js',
+    script: argv._[1] || 'dist/js/index.js',
     watch: 'dist/js',
     delay: 100,
     ext: 'js',
