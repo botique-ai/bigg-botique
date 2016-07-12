@@ -10,6 +10,7 @@ const gulpFilter = require('gulp-filter');
 const mocha = require('gulp-mocha');
 const sourcemaps = require('gulp-sourcemaps');
 const jeditor = require("gulp-json-editor");
+const gutil = require('gulp-util');
 
 const tsProject = ts.createProject(path.join(__dirname, 'tsconfig.json'), {
   typescript: require('typescript')
@@ -35,6 +36,8 @@ function installDeps() {
 module.exports.install = installDeps;
 
 function compileTs() {
+  gutil.log('===> Starting typescript compilation....');
+
   const tsResult = gulp.src([
     'src/**/*.ts',
     'typings/**/*.d.ts'
@@ -45,7 +48,10 @@ function compileTs() {
 
   return tsResult.js
       .pipe(sourcemaps.write())
-      .pipe(gulp.dest('dist/js'));
+      .pipe(gulp.dest('dist/js'))
+      .on('end', () => {
+        gutil.log('<=== Typescript source compiling finished.');
+      });
 }
 module.exports.compile = compileTs;
 
@@ -58,7 +64,10 @@ function runTests() {
 module.exports.test = gulp.series(installDeps, compileTs, runTests);
 
 function watchCompile() {
-  gulp.watch('src/**/*', gulp.series(compileTs));
+  gulp.watch(['src/**/*', 'typings/**/*'], compileTs)
+    .on('change', () => {
+      gutil.log('=== Source change detected. Recompiling....');
+    });
 }
 module.exports['compile-watch'] = gulp.series(compileTs, watchCompile);
 
