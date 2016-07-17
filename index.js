@@ -11,6 +11,7 @@ const mocha = require('gulp-mocha');
 const sourcemaps = require('gulp-sourcemaps');
 const jeditor = require("gulp-json-editor");
 const gutil = require('gulp-util');
+const _ = require('lodash');
 
 const tsProject = ts.createProject(path.join(__dirname, 'tsconfig.json'), {
   typescript: require('typescript')
@@ -71,13 +72,18 @@ function watchCompile() {
 }
 module.exports['compile-watch'] = gulp.series(compileTs, watchCompile);
 
-function runWatch(config, env, argv) {
+function runWatch({script, watch, delay, ext, env, debugPort, nodeEnv}) {
   nodemon({
-    script: argv._[1] || 'dist/js/index.js',
-    watch: 'dist/js',
-    delay: 100,
-    ext: 'js',
-    env: {'NODE_ENV': 'development'}
+    script: script || 'dist/js/index.js',
+    watch: watch || 'dist/js',
+    delay: delay || 100,
+    ext: ext || 'js',
+    execMap: {
+      js: `node --debug=${debugPort || 5858}`
+    },
+    env: _.extend({
+      NODE_ENV: nodeEnv || 'development'
+    }, env)
   });
 }
 
