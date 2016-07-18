@@ -7,7 +7,7 @@ const ts = require('gulp-typescript');
 const nodemon = require('gulp-nodemon');
 const http = require('http');
 const gulpFilter = require('gulp-filter');
-const mocha = require('gulp-mocha');
+const mocha = require('gulp-spawn-mocha');
 const sourcemaps = require('gulp-sourcemaps');
 const jeditor = require("gulp-json-editor");
 const gutil = require('gulp-util');
@@ -48,13 +48,42 @@ function compileTs() {
 
 
   return tsResult.js
-      .pipe(sourcemaps.write())
-      .pipe(gulp.dest('dist/js'))
-      .on('end', () => {
-        gutil.log('<=== Typescript source compiling finished.');
-      });
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('dist/js'))
+    .on('end', () => {
+      gutil.log('<=== Typescript source compiling finished.');
+    });
 }
 module.exports.compile = compileTs;
+
+function compileTests() {
+  gutil.log('===> Starting typescript tests compilation....');
+
+  const tsResult = gulp.src([
+    'test/**/*.ts',
+    'typings/**/*.d.ts'
+  ])
+    .pipe(sourcemaps.init())
+    .pipe(ts(tsProject));
+
+
+  return tsResult.js
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('dist/test'))
+    .on('end', () => {
+      gutil.log('<=== Typescript tests source compiling finished.');
+    });
+}
+module.exports['compile-tests'] = compileTests;
+
+function runIntegrationTests() {
+  return gulp.src('./dist/test/**/*.spec.js')
+    .pipe(mocha())
+    .on('error', function(err) {
+      gutil.log('Integration tests failed. ' + err.message);
+    });
+}
+module.exports['run-integration-tests'] = runIntegrationTests;
 
 function runTests() {
   return gulp.src('./dist/js/**/*')
@@ -65,12 +94,21 @@ function runTests() {
 module.exports.test = gulp.series(installDeps, compileTs, runTests);
 
 function watchCompile() {
-  gulp.watch(['src/**/*', 'typings/**/*'], compileTs)
+  gulp.watch(['src/**/*', 'typings/**/*'], {interval: 1000, usePolling: true}, compileTs)
     .on('change', () => {
       gutil.log('=== Source change detected. Recompiling....');
     });
+  gulp.watch(['test/**/*', 'typings/**/*'], {interval: 1000, usePolling: true}, compileTests)
+    .on('change', () => {
+      gutil.log('=== Tests source change detected. Recompiling....');
+    });
 }
 module.exports['compile-watch'] = gulp.series(compileTs, watchCompile);
+
+function watchIntegrationTests() {
+  gulp.watch(['dist/js/**/*', 'dist/test/**/*'], {interval: 1000, usePolling: true}, runIntegrationTests);
+}
+module.exports['watch-integration-tests'] = gulp.series(runIntegrationTests, watchIntegrationTests);
 
 function runWatch({script, watch, delay, ext, env, debugPort, nodeEnv}) {
   nodemon({
