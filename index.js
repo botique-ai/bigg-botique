@@ -76,9 +76,12 @@ function compileTests() {
 }
 module.exports['compile-tests'] = compileTests;
 
-function runIntegrationTests() {
+function runIntegrationTests({ reporter, reportFilePath}) {
   return gulp.src('./dist/test/**/*.spec.js')
-    .pipe(mocha())
+    .pipe(mocha({
+      reporter,
+      p: reportFilePath,
+    }))
     .on('error', function(err) {
       gutil.log('Integration tests failed. ' + err.message);
     });
@@ -105,10 +108,10 @@ function watchCompile() {
 }
 module.exports['compile-watch'] = gulp.series(compileTs, watchCompile);
 
-function watchIntegrationTests() {
-  gulp.watch(['dist/js/**/*', 'dist/test/**/*'], {interval: 1000, usePolling: true}, runIntegrationTests);
+function watchIntegrationTests(argv) {
+  gulp.watch(['dist/js/**/*', 'dist/test/**/*'], {interval: 1000, usePolling: true}, runIntegrationTests.bind(undefined, argv));
 }
-module.exports['watch-integration-tests'] = gulp.series(runIntegrationTests, watchIntegrationTests);
+module.exports['watch-integration-tests'] = (argv) => gulp.series(runIntegrationTests.bind(undefined, argv), watchIntegrationTests.bind(undefined, argv))();
 
 function runWatch({script, watch, delay, ext, env, debugPort, nodeEnv}) {
   nodemon({
