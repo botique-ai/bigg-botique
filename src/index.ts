@@ -19,4 +19,5 @@ export {
   default as installDeps
 } from "./tasks/installDeps";
 
-export const compileRunAndWatch = series(compile, parallel(watchCompile, runAndWatch));
+export const compileRunAndWatch = (args) =>
+  series(compile, parallel(watchCompile, () => runAndWatch(args)))();

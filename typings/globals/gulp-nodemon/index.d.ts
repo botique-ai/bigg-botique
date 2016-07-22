@@ -32,6 +32,7 @@ declare module "gulp-nodemon" {
              * Ignore specific files or directories.
              */
             ignore?: string[];
+            ignoreRoot?: string[];
             /**
              * Minimise nodemon messages to start/stop only.
              */

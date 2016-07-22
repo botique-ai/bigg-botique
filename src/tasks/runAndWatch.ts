@@ -8,13 +8,15 @@ export default function runAndWatch({
   ext,
   env,
   debugPort,
-  nodeEnv
+  nodeEnv,
+  ignoreRoot
 }) {
   nodemon({
     script: script || 'lib/index.js',
     watch: watch || 'lib',
     delay: delay || 100,
     ext: ext || 'js',
+    ignoreRoot,
     execMap: {
       js: `node --debug=${debugPort || 5858}`
     },
