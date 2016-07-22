@@ -20,6 +20,6 @@
   },
   "devDependencies": {
     "bigg": "^0.2.3",
-    "bigg-botique": "^0.1.2"
+    "bigg-botique": "^0.1.4"
   }
 }
