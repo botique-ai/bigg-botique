@@ -1,7 +1,7 @@
 import * as nodemon from "gulp-nodemon";
 import {extend} from "lodash";
 
-export default function runWatch({
+export default function runAndWatch({
   script,
   watch,
   delay,
