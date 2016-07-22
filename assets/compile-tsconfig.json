@@ -6,6 +6,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "outDir": "dist",
-    "moduleResolution": "node"
-  }
+    "moduleResolution": "node",
+    "declaration": true
+  },
+  "filesGlob" : [
+    "src/**/*.ts"
+  ]
 }

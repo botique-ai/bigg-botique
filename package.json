@@ -16,9 +16,13 @@
     "gulp-mocha": "^2.2.0",
     "gulp-nodemon": "^2.1.0",
     "gulp-sourcemaps": "^1.6.0",
+    "gulp-spawn-mocha": "^2.2.2",
     "gulp-typescript": "^2.13.6",
     "gulp-util": "^3.0.7",
     "lodash": "^4.13.1",
     "merge2": "^1.0.2"
+  },
+  "devDependencies": {
+    "bigg": "^0.2.3"
   }
 }
