@@ -1,10 +1,10 @@
 import {src, dest} from "gulp";
 import {join} from "path";
 import * as ts from "gulp-typescript";
+import {CompilationStream} from "gulp-typescript";
 import {log} from "gulp-util";
 import * as sourcemaps from "gulp-sourcemaps";
 import merge = require("merge2");
-import {CompilationStream} from "gulp-typescript";
 
 const tsProject = ts.createProject(join(__dirname, '../../assets/compile-tsconfig.json'), {
   typescript: require('typescript')
@@ -34,5 +34,5 @@ export default function compile() {
 
   const dtsFiles = tsResult.dts.pipe(dest('lib/'));
 
-  return merge([ jsFiles, dtsFiles ]);
+  return merge([ jsFiles, dtsFiles ]) as any;
 }

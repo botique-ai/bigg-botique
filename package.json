@@ -19,6 +19,7 @@
     "merge2": "^1.0.2"
   },
   "devDependencies": {
-    "bigg": "^0.2.3"
+    "bigg": "^0.2.3",
+    "bigg-botique": "^0.1.2"
   }
 }
