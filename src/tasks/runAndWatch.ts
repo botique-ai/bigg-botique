@@ -2,26 +2,16 @@ import * as nodemon from "gulp-nodemon";
 import {extend} from "lodash";
 
 export default function runAndWatch({
-  script,
-  watch,
-  delay,
-  ext,
-  env,
-  debugPort,
-  nodeEnv,
-  ignoreRoot
+  name
 }) {
   nodemon({
-    script: script || 'lib/index.js',
-    watch: watch || 'lib',
-    delay: delay || 100,
-    ext: ext || 'js',
-    ignoreRoot,
+    script: `./build/${name}/bundle.js`,
+    ext: 'js',
     execMap: {
-      js: `node --debug=${debugPort || 5858}`
+      js: `node --debug=${5858}`
     },
     env: extend({
-      NODE_ENV: nodeEnv || 'development'
-    }, env) as any
+      NODE_ENV: 'development'
+    }) as any
   });
 }

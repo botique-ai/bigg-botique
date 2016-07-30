@@ -1,14 +1,14 @@
 import {parallel, series} from "gulp";
-import {watchCompile} from "./tasks/watchCompile";
 import compile from "./tasks/compile";
 import runAndWatch from "./tasks/runAndWatch";
+import watchCompile from "./tasks/watchCompile";
 
 export {
   default as compile
 } from "./tasks/compile";
 
 export {
-  compileAndWatch
+  default as compileAndWatch
 } from "./tasks/watchCompile";
 
 export {
@@ -19,5 +19,9 @@ export {
   default as installDeps
 } from "./tasks/installDeps";
 
+export {
+  default as runService
+} from "./tasks/runService";
+
 export const compileRunAndWatch = (args) =>
-  series(compile, parallel(watchCompile, () => runAndWatch(args)))();
+  parallel(() => watchCompile(args), () => runAndWatch(args))();
