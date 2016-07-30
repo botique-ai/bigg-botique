@@ -15,6 +15,13 @@ export default function watchCompile({entries, name}) {
 
   const compiler = webpack(config);
 
+  compiler['plugin']('invalid', () => {
+    console.log('Change detected. Compiling...');
+  });
+
+  console.log();
+  console.log('Starting initial compilation...');
+
   compiler.watch({}, (err, stats) => {
     if (err) {
       console.error('Failed to create a production build. Reason:');
