@@ -10,9 +10,9 @@ module.exports = {
   target: 'node',
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
-    path: './build',
+    path: './',
     pathinfo: true,
-    filename: '[name].bundle.js',
+    filename: '[name].js',
     publicPath: '/',
     libraryTarget: 'commonjs2'
   },

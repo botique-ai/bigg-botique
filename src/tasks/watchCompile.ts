@@ -2,7 +2,7 @@ import webpack = require('webpack');
 
 const config = require('../../assets/dev.webpack.config');
 
-export default function watchCompile({entries, name}) {
+export default function watchCompile({entries}) {
   const webpackEntry = {};
 
   entries.forEach((entry) => {
@@ -10,8 +10,6 @@ export default function watchCompile({entries, name}) {
   });
 
   config.entry = webpackEntry;
-  config.output.path = './';
-  config.output.filename = '[name].js';
 
   const compiler = webpack(config);
 

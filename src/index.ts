@@ -1,5 +1,4 @@
-import {parallel, series} from "gulp";
-import compile from "./tasks/compile";
+import {parallel} from "gulp";
 import runAndWatch from "./tasks/runAndWatch";
 import watchCompile from "./tasks/watchCompile";
 
@@ -26,6 +25,10 @@ export {
 export {
   default as debug
 } from "./tasks/debug";
+
+export {
+  default as runFrontendAndWatch
+} from "./tasks/runFrontendAndWatch";
 
 export const compileRunAndWatch = (args) =>
   parallel(() => watchCompile(args), () => runAndWatch(args))();
