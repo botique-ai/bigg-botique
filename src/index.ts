@@ -23,5 +23,9 @@ export {
   default as runService
 } from "./tasks/runService";
 
+export {
+  default as debug
+} from "./tasks/debug";
+
 export const compileRunAndWatch = (args) =>
   parallel(() => watchCompile(args), () => runAndWatch(args))();

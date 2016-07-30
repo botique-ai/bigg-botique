@@ -18,6 +18,7 @@
     "json-loader": "^0.5.4",
     "lodash": "^4.13.1",
     "merge2": "^1.0.2",
+    "node-inspector": "^0.12.8",
     "progress-bar-webpack-plugin": "^1.8.0",
     "ts-loader": "^0.8.2",
     "typescript": "^1.8.10",
