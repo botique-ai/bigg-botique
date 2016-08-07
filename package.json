@@ -1,6 +1,6 @@
 {
   "name": "bigg-botique",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Build configuration for BOTique.",
   "main": "index.js",
   "scripts": {
