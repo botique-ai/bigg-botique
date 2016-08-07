@@ -1,7 +1,7 @@
 import {DebugServer} from 'node-inspector/lib/debug-server';
 import Config = require('node-inspector/lib/config');
 
-export default function debug() {
+export default function debug({webPort}:{webPort?:number}) {
   var config = new Config([]);
 
   var debugServer = new DebugServer(config);

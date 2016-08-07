@@ -19,8 +19,8 @@ export {
 } from "./tasks/installDeps";
 
 export {
-  default as runService
-} from "./tasks/runService";
+  default as compileAndRun
+} from "./tasks/compileAndRun";
 
 export {
   default as debug

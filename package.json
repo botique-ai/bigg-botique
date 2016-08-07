@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "autoprefixer": "^6.3.7",
+    "css-loader": "0.23.1",
+    "file-loader": "0.9.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-install": "^0.6.0",
     "gulp-nodemon": "^2.1.0",
@@ -21,16 +23,16 @@
     "lodash": "^4.13.1",
     "merge2": "^1.0.2",
     "node-inspector": "^0.12.8",
+    "node-uuid": "^1.4.7",
+    "postcss-loader": "0.9.1",
     "progress-bar-webpack-plugin": "^1.8.0",
+    "require-relative": "^0.8.7",
+    "style-loader": "0.13.1",
     "ts-loader": "^0.8.2",
     "typescript": "^1.8.10",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "1.14.1",
     "url-loader": "0.5.7",
-    "style-loader": "0.13.1",
-    "postcss-loader": "0.9.1",
-    "css-loader": "0.23.1",
-    "file-loader": "0.9.0"
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "1.14.1"
   },
   "devDependencies": {
     "bigg": "^0.3.2",
