@@ -47,6 +47,6 @@ export default function compileAndRun({_}) {
       process.stdout.write('closing code: ' + code);
     });
 
-    debug({});
+    exec(`node-inspector`);
   });
 }
