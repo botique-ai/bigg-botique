@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const fs = require('fs');
+const nodeExternals = require('webpack-node-externals');
 
 const node_modules = fs.readdirSync('node_modules').filter(x => x !== '.bin' );
 
@@ -20,7 +21,7 @@ module.exports = {
     extensions: ['', '.js', '.ts', '.tsx']
   },
   externals: [
-    node_modules
+    nodeExternals()
   ],
   resolveLoader: {
     root: path.resolve(path.join(__dirname, '../node_modules')),

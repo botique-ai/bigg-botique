@@ -1,4 +1,5 @@
 /// <reference path="globals/chalk/index.d.ts" />
+/// <reference path="globals/es6-promise/index.d.ts" />
 /// <reference path="globals/gulp-install/index.d.ts" />
 /// <reference path="globals/gulp-nodemon/index.d.ts" />
 /// <reference path="globals/gulp-sourcemaps/index.d.ts" />

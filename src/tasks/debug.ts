@@ -1,27 +1,22 @@
-import {DebugServer} from 'node-inspector/lib/debug-server';
-import Config = require('node-inspector/lib/config');
+import {fork} from "child_process";
 
-export default function debug({webPort}:{webPort?:number}) {
-  var config = new Config([]);
+export default function debug({_, webPort = "8888"}:{_:Array<any>; webPort?:string}) {
+  var inspectorArgs = [`--web-port=${webPort}`].concat(_.slice(1));
+  var inspector = fork(
+    require.resolve('node-inspector/bin/inspector'),
+    inspectorArgs
+  );
 
-  var debugServer = new DebugServer(config);
+  inspector.on('message', handleInspectorMessage);
 
-  debugServer.on('error', (err) => {
-
-    if (err.code === 'EADDRINUSE') {
-      console.error('There is another process already listening at this address.\nChange "webPort": {port} to use a different port.');
+  function handleInspectorMessage(msg) {
+    switch (msg.event) {
+      case 'SERVER.LISTENING':
+        console.log('Visit %s to start debugging.', msg.address.url);
+        break;
+      case 'SERVER.ERROR':
+        console.log('Cannot start the server: %s.', msg.error.code);
+        break;
     }
-
-    process.exit(1);
-  });
-
-  debugServer.on('listening', function () {
-    console.log('Visit', this.address().url, 'to start debugging.');
-  });
-
-  debugServer.on('close', function () {
-    process.exit();
-  });
-
-  debugServer.start(config);
+  }
 }

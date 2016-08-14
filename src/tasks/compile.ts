@@ -1,38 +1,36 @@
-import {src, dest} from "gulp";
-import {join} from "path";
-import * as ts from "gulp-typescript";
-import {CompilationStream} from "gulp-typescript";
-import {log} from "gulp-util";
-import * as sourcemaps from "gulp-sourcemaps";
-import merge = require("merge2");
+import webpack = require("webpack");
+const uuid = require('node-uuid');
+const config = require('../../assets/dev.webpack.config');
 
-const tsProject = ts.createProject(join(__dirname, '../../assets/compile-tsconfig.json'), {
-  typescript: require('typescript')
-});
+export default function compile({_}) {
+  return new Promise((resolve, reject) => {
+    const outputId = uuid.v4();
 
-export const compilePaths = [
-  'src/**/*.ts',
-  'typings/**/*.d.ts'
-];
+    config.entry = [_[1]];
+    config.output.filename = `./build/tmp/${outputId}.js`;
 
-export default function compile() {
-  log('===> Starting typescript compilation....');
+    webpack(config, (err, stats) => {
+      if (err) {
+        console.error('Failed to create a production build. Reason:');
+        console.error(err.message || err);
+        reject(err);
+      }
 
-  const tsResult:CompilationStream = src(compilePaths)
-    .pipe(sourcemaps.init())
-    .pipe(ts(tsProject)) as CompilationStream;
+      if (stats.hasErrors()) {
+        console.log(stats.toString({
+          chunks: false, // Makes the build much quieter
+          colors: true
+        }));
+      }
+      else if (stats.hasWarnings()) {
+        console.log(stats.toString({
+          chunks: false, // Makes the build much quieter
+          colors: true
+        }));
+      }
 
-  const jsFiles = tsResult.js
-    .pipe(sourcemaps.write())
-    .pipe(dest('lib/'))
-    .on('error', (err) => {
-      log('<=== Failed to compiler tests sources. ' + err.message);
-    })
-    .on('end', () => {
-      log('<=== Typescript source compiling finished.');
+      console.log('Compiled successfully.');
+      resolve(config.output.filename);
     });
-
-  const dtsFiles = tsResult.dts.pipe(dest('lib/'));
-
-  return merge([ jsFiles, dtsFiles ]) as any;
+  });
 }
