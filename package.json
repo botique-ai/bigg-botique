@@ -1,6 +1,6 @@
 {
   "name": "bigg-botique",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Build configuration for BOTique.",
   "main": "src/index.js",
   "types": "definitions/src/index.d.ts",
