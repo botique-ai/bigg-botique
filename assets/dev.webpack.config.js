@@ -1,24 +1,19 @@
 const path = require('path');
 const webpack = require('webpack');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const fs = require('fs');
 const nodeExternals = require('webpack-node-externals');
 
 const node_modules = fs.readdirSync('node_modules').filter(x => x !== '.bin' );
 
 module.exports = {
-  devtool: 'cheap-module-source-map',
   target: 'node',
   output: {
-    // Next line is not used in dev but WebpackDevServer crashes without it:
-    path: './',
     pathinfo: true,
     filename: '[name].js',
-    publicPath: '/',
     libraryTarget: 'commonjs2'
   },
   resolve: {
-    extensions: ['', '.js', '.ts', '.tsx']
+    extensions: ['', '.ts', '.tsx', '.js']
   },
   externals: [
     nodeExternals()
@@ -40,11 +35,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
-    new ProgressBarPlugin({
-      format: '  build [:bar] :percent (:elapsed seconds)',
-      clear: false,
-      width: 60
-    })
+    new webpack.SourceMapDevToolPlugin(
+      '[file].map', null,
+      "[absolute-resource-path]", "[absolute-resource-path]"),
+    new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' })
   ]
 };

@@ -7,3 +7,6 @@ export * from "./tasks/installDeps";
 export * from "./tasks/run";
 export * from "./tasks/runAndWatch";
 export * from "./tasks/runFrontendAndWatch";
+export * from "./tasks/bundleTypescriptAndWatch";
+export * from "bigg-typescript";
+export * from "bigg-bundle";
