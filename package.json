@@ -3,7 +3,7 @@
   "version": "0.4.0",
   "description": "Build configuration for BOTique.",
   "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "types": "definitions/src/index.d.ts",
   "scripts": {
     "prepublish": "bigg compile",
     "test": "echo \"Error: no test specified\" && exit 1"
