@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/fe47fd39e0e5b679954fb9fa9063ce5f08c49522/gulp-install/gulp-install.d.ts",
-    "raw": "registry:dt/gulp-install#0.6.0+20160123221915",
-    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/fe47fd39e0e5b679954fb9fa9063ce5f08c49522/gulp-install/gulp-install.d.ts"
-  }
-}

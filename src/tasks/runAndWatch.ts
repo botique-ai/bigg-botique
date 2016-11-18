@@ -1,12 +1,15 @@
 import * as nodemon from "gulp-nodemon";
+import {dirname} from "path";
 
-export default function runAndWatch({
+export function runAndWatch({
   script,
   production
 }) {
   nodemon({
     script,
     ext: 'js',
+    delay: 2000,
+    watch: [dirname(script)],
     execMap: {
       js: `node --debug=${5858}`
     },

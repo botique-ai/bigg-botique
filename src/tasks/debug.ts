@@ -1,6 +1,6 @@
 import {fork} from "child_process";
 
-export default function debug({_, webPort = "8888"}:{_:Array<any>; webPort?:string}) {
+export function debug({_, webPort = "8888"}:{_:Array<any>; webPort?:string}) {
   var inspectorArgs = [`--web-port=${webPort}`].concat(_.slice(1));
   var inspector = fork(
     require.resolve('node-inspector/bin/inspector'),

@@ -26,7 +26,7 @@ function formatMessage(message) {
     .replace('./~/css-loader!./~/postcss-loader!', '');
 }
 
-export default function runFrontendAndWatch({
+export function runFrontendAndWatch({
   indexHtml,
   favIcon,
   name,

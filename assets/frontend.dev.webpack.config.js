@@ -8,7 +8,7 @@ const node_modules = fs.readdirSync('node_modules').filter(x => x !== '.bin');
 
 module.exports = function frontendConfig(indexFile, favIcon, name, script, rootUrl) {
   return {
-    devtool: 'cheap-module-source-map',
+    devtool: 'module-source-map',
     entry: {
       dev: require.resolve('webpack-dev-server/client') + '?' + rootUrl,
       host: require.resolve('webpack/hot/dev-server') + '?overlay=true',

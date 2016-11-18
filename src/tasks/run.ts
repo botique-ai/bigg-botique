@@ -1,7 +1,7 @@
 import {fork} from "child_process";
 import {resolve} from "path";
 
-export default function run({_}) {
+export function run({_}) {
   console.log(`Running ${resolve(_[1])}...`);
   console.log();
   fork(
