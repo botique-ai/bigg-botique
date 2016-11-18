@@ -3,13 +3,14 @@ import {dirname} from "path";
 
 export function runAndWatch({
   script,
-  production
+  production,
+  watch
 }) {
   nodemon({
     script,
     ext: 'js',
-    delay: 2000,
-    watch: [dirname(script)],
+    delay: 200,
+    watch: watch ? (Array.isArray(watch) ? watch : [watch]) : [dirname(script)],
     execMap: {
       js: `node --debug=${5858}`
     },
