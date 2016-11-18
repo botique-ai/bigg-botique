@@ -22,7 +22,7 @@ module.exports = function frontendConfig(indexFile, favIcon, name, script, rootU
       publicPath: '/'
     },
     resolve: {
-      extensions: ['', '.js', '.ts', '.tsx']
+      extensions: ['', '.ts', '.tsx', '.js']
     },
     // externals: [
     //   node_modules
@@ -54,6 +54,13 @@ module.exports = function frontendConfig(indexFile, favIcon, name, script, rootU
           loader: 'url?limit=10000'
         }
       ]
+    },
+    ts: {
+      transpileOnly: true,
+      compilerOptions: {
+        target: 'es5',
+        isolatedModules: true
+      }
     },
     postcss: function () {
       return [autoprefixer];
